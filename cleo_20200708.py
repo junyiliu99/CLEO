@@ -37,6 +37,10 @@ class CLEO:
         self.status = 'accept'
         self.his = {'x': [], 'obj': [], 'delta': []}
 
+########################
+# An logistic demand model is used to simulate the data pairs in this instance
+# It can be replaced by other demand models
+
     def demand_func(self, x):
         if type(x) == list or x.ndim == 1:
             tmp = np.exp(self.param['k'] - self.param['m'] * x[0])
@@ -55,6 +59,9 @@ class CLEO:
         sample_w = self.demand_func(sample_x)
         return sample_x, sample_w
 
+#####################################
+# the ouput under the mode of "linear" is the mean value  
+# the ouput under the mode of "empirical" is the sum of mean value and the residual
     def demand_func_appro(self, x, residual=None, mode='linear'):
         if mode == 'linear':
             return np.dot(self.k1, x) + self.k0
